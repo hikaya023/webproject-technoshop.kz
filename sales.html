@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Акции — MobileStore</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    @media (max-width: 980px){
+      .products-grid{ grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px){
+      .products-grid{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Шапка -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">technoshop.kz</a>
+
+      <form class="search" action="catalog.html" role="search" aria-label="Поиск товаров">
+        <input type="search" name="q" placeholder="Поиск: iPhone, ноутбук, наушники..." />
+        <button type="submit" aria-label="Искать">🔍</button>
+      </form>
+
+      <nav class="header-actions">
+        <a href="catalog.html" class="nav-link">Каталог</a>
+        <a href="contacts.html" class="nav-link">Контакты</a>
+        <a href="about.html" class="nav-link">О нас</a>
+        <a href="sales.html" class="nav-link active">Акции</a>
+        <a href="cart.html" class="cart-btn" aria-label="Корзина">
+          <span class="cart-icon">🛒</span>
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+        <a href="login.html" class="btn btn-ghost">Войти</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="margin-top:120px;">
+    <h1>Товары со скидкой</h1>
+
+    <div class="products-grid" id="productsGrid">
+      <!-- Товары со скидкой будут добавляться через JS -->
+    </div>
+  </main>
+
+  <script>
+    // Товары со скидкой
+    const saleProducts = [
+    {id:201, name:'Xiaomi 14 Pro', price:420000, salePrice:379000, img:'https://megapixel.by/wp-content/uploads/2023/11/Xiaomi-14-Pro.webp'},
+    {id:202, name:'Lenovo Legion 5', price:650000, salePrice:599000, img:'https://images.unsplash.com/photo-1593642532973-d31b6557fa68?q=80&w=600&auto=format&fit=crop&crop=faces'},
+    {id:203, name:'Galaxy Buds 2', price:35000, salePrice:29900, img:'https://avatars.mds.yandex.net/i?id=3ead0c07a6ec041ede74878f7bee7ca8dcc739c5-4248551-images-thumbs&n=13'},
+    {id:204, name:'iPad Air', price:380000, salePrice:345000, img:'https://avatars.mds.yandex.net/get-marketpic/13505639/pic24b99b1ea961372b2ee32b93be514b14/orig'},
+    {id:205, name:'Samsung Galaxy Watch 6', price:150000, salePrice:129000, img:'https://ir.ozone.ru/s3/multimedia-1-n/7034147015.jpg'},
+    {id:206, name:'ASUS ZenBook 14', price:580000, salePrice:520000, img:'https://avatars.mds.yandex.net/get-mpic/11552111/2a00000195ba516bf32269cd100ac585b20d/orig'},
+    {id:207, name:'Sony WH-1000XM5', price:120000, salePrice:99000, img:'https://cdn.wccftech.com/wp-content/uploads/2023/03/FsgKE2YWIAA4_tI.jpg'},
+    {id:208, name:'OnePlus 12', price:410000, salePrice:379000, img:'https://avatars.mds.yandex.net/i?id=0716a91c0f874f3af9ae7666e8e2cf9a_l-5221316-images-thumbs&n=13'}
+  ];
+
+    const productsGrid = document.getElementById('productsGrid');
+    const cartCountEl = document.getElementById('cartCount');
+
+    function renderProducts() {
+      productsGrid.innerHTML = '';
+      saleProducts.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <img class="product-img" src="${p.img}" alt="${p.name}">
+          <div class="product-body">
+            <h3 class="product-title">${p.name}</h3>
+            <p class="product-spec"><span style="text-decoration: line-through; color:#888;">₸ ${p.price.toLocaleString()}</span> <span style="color:red; font-weight:600;">₸ ${p.salePrice.toLocaleString()}</span></p>
+            <div class="product-bottom">
+              <button class="btn btn-sm btn-outline add-to-cart">Добавить</button>
+            </div>
+          </div>
+        `;
+        card.querySelector('.add-to-cart').addEventListener('click', () => addToCart(p));
+        productsGrid.appendChild(card);
+      });
+    }
+
+    // Корзина
+    function getCart() { return JSON.parse(localStorage.getItem('ms_cart') || '[]'); }
+    function setCart(cart) { localStorage.setItem('ms_cart', JSON.stringify(cart)); updateCartCount(); }
+    function addToCart(product) {
+      const cart = getCart();
+      const found = cart.find(p => p.id === product.id);
+
+      // Используем salePrice, если есть
+      const priceToAdd = product.salePrice || product.price;
+
+      if(found) found.qty += 1;
+      else cart.push({
+        id: product.id,
+        name: product.name,
+        price: priceToAdd,  // <-- цена со скидкой
+        qty: 1
+      });
+
+  setCart(cart);
+  updateCartCount();
+  alert(product.name + ' добавлен(а) в корзину!');
+}
+    function updateCartCount(){
+      const cart = getCart();
+      const count = cart.reduce((sum,p) => sum + (p.qty||0), 0);
+      cartCountEl.textContent = count;
+    }
+
+    // init
+    renderProducts();
+    updateCartCount();
+  </script>
+
+</body>
+</html>

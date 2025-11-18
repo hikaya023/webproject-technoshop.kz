@@ -1,0 +1,91 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://news.cgtn.com/news/2022-07-24/Smartphones-other-gadgets-in-China-Will-the-decline-end-in-2nd-half--1bW03CaXoR2/img/293f2b4537104d5089f251d6ac4ab247/293f2b4537104d5089f251d6ac4ab247.jpeg");
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px); /* размытие фона */
+    z-index: -1;
+}
+
+.login-container {
+    background: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    width: 350px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.login-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-container label {
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.login-container input {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+}
+
+.login-container input:focus {
+    border-color: #007BFF;
+}
+
+.login-container button {
+    padding: 12px;
+    background: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.login-container button:hover {
+    background: #0056b3;
+}
+
+.switch-form {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.switch-form a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.switch-form a:hover {
+    text-decoration: underline;
+}

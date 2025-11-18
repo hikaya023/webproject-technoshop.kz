@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Контакты — MobileStore</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    main {
+      margin-top: 120px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 20px;
+    }
+    .contact-info {
+      margin-bottom: 40px;
+    }
+    .contact-info p {
+      margin: 6px 0;
+    }
+    form.contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    form.contact-form input,
+    form.contact-form textarea {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      width: 100%;
+    }
+    form.contact-form button {
+      width: 150px;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background-color: #1e88e5;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Шапка -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">technoshop.kz</a>
+
+      <form class="search" action="catalog.html" role="search" aria-label="Поиск товаров">
+        <input type="search" name="q" placeholder="Поиск: iPhone, ноутбук, наушники..." />
+        <button type="submit" aria-label="Искать">🔍</button>
+      </form>
+
+      <nav class="header-actions">
+        <a href="catalog.html" class="nav-link">Каталог</a>
+        <a href="contacts.html" class="nav-link active">Контакты</a>
+        <a href="about.html" class="nav-link">О нас</a>
+        <a href="sales.html" class="nav-link">Акции</a>
+        <a href="cart.html" class="cart-btn" aria-label="Корзина">
+          <span class="cart-icon">🛒</span>
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+        <a href="login.html" class="btn btn-ghost">Войти</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h1>Контакты</h1>
+
+    <div class="contact-info">
+      <p><strong>Адрес:</strong> г. Караганда, пр. Университетская, 28</p>
+      <p><strong>Телефон:</strong> +7 (727) 111-22-33</p>
+      <p><strong>Email:</strong> info@technoshop.kz</p>
+      <p><strong>Часы работы:</strong> Пн-Пт 9:00–18:00, Сб 10:00–16:00</p>
+    </div>
+
+    <h2>Обратная связь</h2>
+    <form class="contact-form" id="contactForm">
+      <input type="text" name="name" placeholder="Ваше имя" required>
+      <input type="email" name="email" placeholder="Ваш email" required>
+      <textarea name="message" rows="5" placeholder="Ваше сообщение" required></textarea>
+      <button type="submit">Отправить</button>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <a class="logo" href="/">technoshop.kz</a>
+        <p>© 2025 technoshop.kz — все права защищены.</p>
+      </div>
+      <div class="footer-right">
+        <nav class="footer-nav">
+          <a href="/about">О нас</a>
+          <a href="/contacts">Контакты</a>
+          <a href="/support">Поддержка</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ---------- Корзина ---------- */
+    const cartCountEl = document.getElementById('cartCount');
+    function getCart() { return JSON.parse(localStorage.getItem('ms_cart') || '[]'); }
+    function setCart(cart) { localStorage.setItem('ms_cart', JSON.stringify(cart)); updateCartCount(); }
+    function updateCartCount() {
+      const cart = getCart();
+      const count = cart.reduce((sum,p) => sum + (p.qty||0), 0);
+      if(cartCountEl) cartCountEl.textContent = count;
+    }
+    updateCartCount();
+
+    /* ---------- Форма обратной связи (демо) ---------- */
+    const contactForm = document.getElementById('contactForm');
+    if(contactForm){
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Спасибо! Ваше сообщение отправлено.');
+        contactForm.reset();
+      });
+    }
+
+    /* ---------- Поиск из шапки (переходит на catalog.html) ---------- */
+    const searchForms = document.querySelectorAll('form.search');
+    searchForms.forEach(form => {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const q = form.querySelector('input[name="q"]').value.trim();
+        const url = 'catalog.html' + (q ? '?q=' + encodeURIComponent(q) : '');
+        window.location.href = url;
+      });
+    });
+  </script>
+
+</body>
+</html>

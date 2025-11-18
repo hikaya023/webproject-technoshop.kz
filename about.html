@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>О нас — MobileStore</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    .about-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 60px 20px;
+      background: #f5f5f5;
+    }
+    .about-hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    .about-hero p {
+      max-width: 700px;
+      font-size: 1.2rem;
+      color: #555;
+    }
+    .about-section {
+      padding: 60px 20px;
+    }
+    .about-section h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2rem;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      text-align: center;
+    }
+    .about-item h3 {
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+    .about-item p {
+      color: #555;
+    }
+    @media (max-width: 980px) {
+      .about-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .about-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">technoshop.kz</a>
+
+    <form class="search" action="catalog.html" role="search" aria-label="Поиск товаров">
+      <input type="search" name="q" placeholder="Поиск: iPhone, ноутбук, наушники..." />
+      <button type="submit" aria-label="Искать">🔍</button>
+    </form>
+
+    <nav class="header-actions">
+      <a href="catalog.html" class="nav-link">Каталог</a>
+      <a href="contacts.html" class="nav-link">Контакты</a>
+      <a href="about.html" class="nav-link">О нас</a>
+      <a href="cart.html" class="cart-btn" aria-label="Корзина">
+        <span class="cart-icon">🛒</span>
+        <span class="cart-count" id="cartCount">0</span>
+      </a>
+      <a href="login.html" class="btn btn-ghost">Войти</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <!-- Hero -->
+    <section class="about-hero">
+      <h1>О нашей компании</h1>
+      <p>MobileStore — ведущий интернет-магазин электроники и аксессуаров в Казахстане. Мы предлагаем качественные товары по доступным ценам и заботимся о каждом клиенте.</p>
+    </section>
+
+    <!-- Миссия и ценности -->
+    <section class="about-section">
+      <h2>Наша миссия и ценности</h2>
+      <div class="about-grid">
+        <div class="about-item">
+          <h3>Качество</h3>
+          <p>Мы гарантируем оригинальность и высокое качество всех товаров.</p>
+        </div>
+        <div class="about-item">
+          <h3>Доступность</h3>
+          <p>Современные гаджеты по честным и прозрачным ценам.</p>
+        </div>
+        <div class="about-item">
+          <h3>Поддержка</h3>
+          <p>Всегда готовы помочь с выбором и обслуживанием товаров.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Команда -->
+    <section class="about-section">
+      <h2>Наша команда</h2>
+      <div class="about-grid">
+        <div class="about-item">
+          <h3>Менеджеры</h3>
+          <p>Профессионалы, которые помогут с выбором техники и аксессуаров.</p>
+        </div>
+        <div class="about-item">
+          <h3>Сервис</h3>
+          <p>Специалисты по гарантийному обслуживанию и поддержке клиентов.</p>
+        </div>
+        <div class="about-item">
+          <h3>Логистика</h3>
+          <p>Обеспечиваем быструю и надежную доставку по всей стране.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <a class="logo" href="/">technoshop.kz</a>
+        <p>© 2025 technoshop.kz — все права защищены.</p>
+      </div>
+      <div class="footer-right">
+        <nav class="footer-nav">
+          <a href="about.html">О нас</a>
+          <a href="contacts.html">Контакты</a>
+          <a href="support.html">Поддержка</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Корзина
+    function getCart() { return JSON.parse(localStorage.getItem('ms_cart') || '[]'); }
+    function setCart(cart) { localStorage.setItem('ms_cart', JSON.stringify(cart)); updateCartCount(); }
+    function updateCartCount() {
+      const cart = getCart();
+      const count = cart.reduce((sum, item) => sum + (item.qty || 0), 0);
+      document.getElementById('cartCount').textContent = count;
+    }
+    updateCartCount();
+  </script>
+
+</body>
+</html>
